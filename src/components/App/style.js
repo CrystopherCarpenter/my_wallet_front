@@ -1,9 +1,12 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-        * {
+        * {     
                 ul, li, button, input, a{
                         all: unset;
+                }
+                body{
+                          background-color: #8C11BE;
                 }
                 margin: 0;
                 padding: 0;
@@ -20,6 +23,6 @@ const GlobalStyle = createGlobalStyle`
                         }
         }
 
-`
+`;
 
 export { GlobalStyle };
