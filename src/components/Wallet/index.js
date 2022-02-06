@@ -4,6 +4,7 @@ import { Header, Name, Container, Data, Day, Description, Text, Value, Balance, 
 import LogOut from '../../assets/logOut.png';
 import Income from '../../assets/income.png';
 import Expense from '../../assets/expense.png'
+import axios from "axios";
 
 function Wallet() {
   let balanceSum = 0;
@@ -15,25 +16,24 @@ function Wallet() {
     { day: '31/02', description: 'dinheiro da mega', value: '25680000', type: 'income' },
     { day: '31/02', description: 'salário', value: '99968', type: 'income' },
     { day: '31/02', description: 'dinheiro de pinga 3', value: '9568', type: 'expense' }]
-  };
-
-  {/*          loadData();
+  }; 
+useEffect(() => {
+       loadData();
         }, []);
 
-          function loadData() {
-                const promise = axios.get(
-                        ``,
-                        { headers: { Authorization: `Bearer ${token}` } }
-                );
+  function loadData() {
+    const promise = axios.get(`http://localhost:5000/mywallet`,
+      { headers: { Authorization: `Bearer 88d1a063-cb7f-43da-b531-c1d1321fcb63` } }
+    );
 
-                promise.then((answer) => {
-                setData(answer.data); */} useEffect(() => {
-                  data.registers.forEach(data => (
-                    data.type === 'income' ? balanceSum += parseInt(data.value) : balanceSum -= parseInt(data.value)
-                  ));
-                  { balanceSum > 0 ? setBalanceType('income') : setBalanceType('expense') };
-                  setBalance(balanceSum);
-                }, []);
+    promise.then((answer) => console.log(answer)
+      //setData(data);
+      //data.data.forEach(data => (
+      // data.type === 'income' ? balanceSum += parseInt(data.value) : balanceSum -= parseInt(data.value)
+      //));
+      //{ balanceSum > 0 ? setBalanceType('income') : setBalanceType('expense') };
+      //setBalance(balanceSum);
+    )}
   
   function printData() {
     if (data.registers.length === 0) {
@@ -51,10 +51,14 @@ function Wallet() {
       );
     }
   }
+
+  function logout() {
+
+  }
   
   return (
     <>
-      <Header><Name>Olá, {data.name}</Name><img src={LogOut}/></Header>
+      <Header><Name>Olá, {data.name}</Name><img src={LogOut} onClick={(e)=> logOut() }/></Header>
       {printData()}
       <Buttons><Link to={`/add/income`}>
         <Button><Icon src={Income}/><span>Nova entrada</span></Button>
