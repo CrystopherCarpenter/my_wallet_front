@@ -19,13 +19,15 @@ function SignUp() {
   { type: "password", placeholder: "Senha", set: setPassword, value: password },
   { type: "password", placeholder: "Confirme a senha", set: setPasswordConf, value: passwordConf }];
 
-  function inputGenerator(type, placeholder, set, value) {
+  function inputGenerator({type, placeholder, set, value}) {
     return (
       <Input
         type={type}
         placeholder={placeholder}
         disabled={loading}
+        validation={validation(value)}
         onChange={(e) => {
+          validation(value);
           set(e.target.value);
         }}
         value={value}
@@ -33,30 +35,33 @@ function SignUp() {
     );
   }
 
+  function validation(value) {
+    let validation = true;
+    return (validation);
+  }
+
+  function signup() {
+    setLoading(true);
+    const promise = axios.post(`http://localhost:5000/signup`, signUp);
+    promise.then(() => {
+      navigate(`/`);
+    });
+    promise.catch(() => {
+      alert(`Verifique os dados e tente novamente`);
+      setLoading(false);
+    });
+  }
+
   return (
     <>
       <Logo login={false}>MyWallet</Logo>
       <Container>
-        {inputs.map(({ type, placeholder, set, value }) => inputGenerator(type, placeholder, set, value))}
+        {inputs.map((input) => inputGenerator(input))}
         <Button
           disabled={loading}
-          onClick={() => {
-            setLoading(true);
-            const promise = axios.post(``, signUp);
-            promise.then(() => {
-              navigate(`/`);
-            });
-            promise.catch(() => {
-              alert(`Verifique os dados e tente novamente`);
-              setLoading(false);
-            });
-          }}
+          onClick={() => signup()}
         >
-          {loading ? (
-            <ThreeDots color="#FFFFFF" height={60} width={60} />
-          ) : (
-            `Cadastrar`
-          )}
+          {loading ? <ThreeDots color="#FFFFFF" height={60} width={60} /> : `Cadastrar`}
         </Button>
       </Container>
       <Link to={"/"} disabled={loading}>
