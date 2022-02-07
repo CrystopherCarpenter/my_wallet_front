@@ -13,14 +13,13 @@ function Wallet() {
   const [balanceType, setBalanceType] = useState('');
   const [balance, setBalance] = useState(0);
   const [data, setData] = useState();
-  const navigate = useNavigate()
   const { token } = useContext(UserContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
     loadData();  
   }, []);
 
-  
   function loadData() {
     const promise = axios.get(`http://localhost:5000/mywallet`,
     { headers: { Authorization: `Bearer ${token}` } }
@@ -29,17 +28,18 @@ function Wallet() {
     promise.then((answer) => {
       setData(answer.data);
       balanceCalc(answer.data.records);
-    })}
+    })
+  }
     
-    function logout() {
-      const promise = axios.post(`http://localhost:5000/logout`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      promise.then(() => { 
-        navigate(`/`);
-      })
-    }
+  function logout() {
+    const promise = axios.post(`http://localhost:5000/logout`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    promise.then(() => { 
+      navigate(`/`);
+    })
+  }
   
   function balanceCalc(data) {
     data.forEach(record => (
@@ -47,8 +47,7 @@ function Wallet() {
     ));
     { balanceSum > 0 ? setBalanceType('income') : setBalanceType('expense') };
     setBalance(balanceSum);
-    }
-  
+  }
   
   function printData() {
     if (data.records.length === 0) {
@@ -73,7 +72,7 @@ function Wallet() {
   
   return (
     <>
-      <Header><Name>Olá, {data.name}</Name><img src={LogOut} onClick={(e)=> logout() }/></Header>
+      <Header><Name>Olá, {data.name}</Name><img src={LogOut} onClick={()=> logout() }/></Header>
       {printData()}
       <Buttons><Link to={`/add/income`}>
         <Button><Icon src={Income}/><span>Nova entrada</span></Button>

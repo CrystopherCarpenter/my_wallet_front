@@ -25,9 +25,7 @@ function SignUp() {
         type={type}
         placeholder={placeholder}
         disabled={loading}
-        validation={validation(value)}
         onChange={(e) => {
-          validation(value);
           set(e.target.value);
         }}
         value={value}
@@ -35,18 +33,23 @@ function SignUp() {
     );
   }
 
-  function validation(value) {
-    let validation = true;
-    return (validation);
-  }
-
   function signup() {
+    if (passwordConf !== password) {
+      alert(`Verifique os dados e tente novamente`);
+      return;
+    }
     setLoading(true);
     const promise = axios.post(`http://localhost:5000/signup`, signUp);
-    promise.then(() => {
+    promise.then((answer) => {
+      if (answer.data !== 'Created') {
+        alert(`Verifique os dados e tente novamente`);
+        setLoading(false);
+        return;
+      }
       navigate(`/`);
     });
-    promise.catch(() => {
+    promise.catch((error) => {
+      console.log(error)
       alert(`Verifique os dados e tente novamente`);
       setLoading(false);
     });

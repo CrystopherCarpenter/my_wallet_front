@@ -27,14 +27,14 @@ const Input = styled.input`
   width: 326px;
   height: 58px;
   box-sizing: border-box;
-  background: ${(props) => (props.disabled ? `#F2F2F2` : ((props.validation) ? `#FFFFFF` : '#FFD3D3'))};
-  ${(props) => (!props.validation && 'border: 1px solid red;')};
+  background: ${(props) => (props.disabled ? `#F2F2F2` : ((!props.validation) ? `#FFFFFF` : '#FFD3D3'))};
+  ${(props) => (props.validation && 'border: 1px solid red;')};
   border-radius: 5px;
   padding: 0 11px;
   font-size: 20px;
-  color: ${(props) => (props.disabled ? `#AFAFAF` : ((props.validation) ? `#000` : 'red'))};
+  color: ${(props) => (props.disabled ? `#AFAFAF` : '#000000')};
   ::placeholder {
-    color: ${(props) => (props.disabled ? `#AFAFAF` : ((props.validation) ? `#000` : 'red'))};
+    color: ${(props) => (props.disabled ? `#AFAFAF` : `#000000`)};
   }
 `;
 

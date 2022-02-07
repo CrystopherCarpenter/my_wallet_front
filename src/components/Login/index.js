@@ -8,23 +8,21 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import axios from "axios";
 
 function Login() {
-  const { setToken } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
+  const { setToken } = useContext(UserContext);
   const navigate = useNavigate();
   const inputs = [{ type: "email", placeholder: "E-mail", set: setEmail, value: email },
   { type: "password", placeholder: "Senha", set: setPassword, value: password }];
-
+  
   function inputGenerator({ type, placeholder, set, value }) {
     return (
       <Input
         type={type}
         placeholder={placeholder}
         disabled={loading}
-        validation = {validation(value)}
         onChange={(e) => {
-          validation(value);
           set(e.target.value);
         }}
         value={value}
@@ -32,19 +30,14 @@ function Login() {
     );
   }
 
-  function validation(value) {
-    let validation = true;
-    return (validation);
-  }
-
   function login() {
      setLoading(true);
             const promise = axios.post(`http://localhost:5000/signin`, { email, password } );
-            promise.then((answer) => {
+    promise.then((answer) => {
               setToken(answer.data.token);
               navigate(`/wallet`);
             });
-            promise.catch((error) => {
+    promise.catch((error) => {
               setLoading(false);
               alert('Email ou senha incorretos')
             });

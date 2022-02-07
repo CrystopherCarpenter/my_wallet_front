@@ -23,19 +23,12 @@ function NewData() {
         type={type}
         placeholder={placeholder}
         disabled={loading}
-        validation = {validation(value)}
         onChange={(e) => {
-          validation(value);
           set(e.target.value);
         }}
         value={value}
       ></Input>
     );
-  }
-
-  function validation(value) {
-    let validation = true;
-    return(validation)
   }
 
   function insertData() {
