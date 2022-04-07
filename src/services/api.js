@@ -15,7 +15,6 @@ async function createUser(user) {
 }
 
 async function login(data) {
-    console.log(BASE_URL);
     const token = await axios.post(`${BASE_URL}/`, data);
     return token;
 }
