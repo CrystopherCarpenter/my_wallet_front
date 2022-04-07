@@ -36,8 +36,6 @@ function Wallet() {
     useEffect(() => {
         if (!auth | (auth === '')) {
             Swal.fire({
-                icon: 'error',
-                title: 'Ops!',
                 text: 'Faça login para continuar',
             });
             navigate('/');
