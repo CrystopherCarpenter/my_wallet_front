@@ -25,3 +25,5 @@ yarn-error.log*
 
 .wakatime-project
 .eslintrc.json
+
+.env
