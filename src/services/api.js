@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://back-project-mywallet.herokuapp.com';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function createConfig(token) {
     return {
@@ -15,6 +15,7 @@ async function createUser(user) {
 }
 
 async function login(data) {
+    console.log(BASE_URL);
     const token = await axios.post(`${BASE_URL}/`, data);
     return token;
 }
