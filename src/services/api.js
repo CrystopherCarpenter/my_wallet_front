@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://back-project-mywallet.herokuapp.com';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function createConfig(token) {
     return {
