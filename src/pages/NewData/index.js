@@ -8,79 +8,83 @@ import { Name, Back } from '../../components/Header';
 import BackArrow from '../../assets/back.png';
 import api from '../../services/api';
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 function NewData() {
-	const params = useParams();
-	const [data, setData] = useState({
-		value: '',
-		description: '',
-		type: params.incomeOrExpense,
-	});
-	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate();
-	const { auth } = useAuth();
+    const params = useParams();
+    const [data, setData] = useState({
+        value: '',
+        description: '',
+        type: params.incomeOrExpense,
+    });
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const { auth } = useAuth();
 
-	function handleSetData({ target }) {
-		setData({ ...data, [target.name]: target.value });
-	}
+    function handleSetData({ target }) {
+        setData({ ...data, [target.name]: target.value });
+    }
 
-	async function handleInsertData() {
-		setLoading(true);
-		try {
-			await api.createRecord(auth, data);
-			setData({
-				value: '',
-				description: '',
-				type: params.incomeOrExpense,
-			});
-			setLoading(false);
-		} catch (error) {
-			console.log(error);
-			alert('Algo deu errado... tente novamente');
-			setLoading(false);
-		}
-	}
+    async function handleInsertData() {
+        setLoading(true);
+        try {
+            await api.createRecord(auth, data);
+            setData({
+                value: '',
+                description: '',
+                type: params.incomeOrExpense,
+            });
+            setLoading(false);
+        } catch {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ops!',
+                text: 'Algo deu errado... tente novamente',
+            });
+            setLoading(false);
+        }
+    }
 
-	return (
-		<>
-			<Back
-				src={BackArrow}
-				alt='Voltar'
-				onClick={() => navigate(-1)}
-			></Back>
-			<Container>
-				<Name>
-					Nova{' '}
-					{params.incomeOrExpense === 'income' ? 'entrada' : 'saída'}
-				</Name>
-				<Input
-					type='courency'
-					placeholder='Valor'
-					name='value'
-					disabled={loading}
-					onChange={(e) => handleSetData(e)}
-					value={data.value}
-					required
-				></Input>
-				<Input
-					type='text'
-					placeholder='Descrição'
-					name='description'
-					disabled={loading}
-					onChange={(e) => handleSetData(e)}
-					value={data.description}
-					required
-				></Input>
-				<Button disabled={loading} onClick={() => handleInsertData()}>
-					{loading ? (
-						<ThreeDots color='#FFFFFF' height={60} width={60} />
-					) : (
-						`Cadastrar`
-					)}
-				</Button>
-			</Container>
-		</>
-	);
+    return (
+        <>
+            <Back
+                src={BackArrow}
+                alt="Voltar"
+                onClick={() => navigate(-1)}
+            ></Back>
+            <Container>
+                <Name>
+                    Nova{' '}
+                    {params.incomeOrExpense === 'income' ? 'entrada' : 'saída'}
+                </Name>
+                <Input
+                    type="courency"
+                    placeholder="Valor"
+                    name="value"
+                    disabled={loading}
+                    onChange={(e) => handleSetData(e)}
+                    value={data.value}
+                    required
+                ></Input>
+                <Input
+                    type="text"
+                    placeholder="Descrição"
+                    name="description"
+                    disabled={loading}
+                    onChange={(e) => handleSetData(e)}
+                    value={data.description}
+                    required
+                ></Input>
+                <Button disabled={loading} onClick={() => handleInsertData()}>
+                    {loading ? (
+                        <ThreeDots color="#FFFFFF" height={60} width={60} />
+                    ) : (
+                        `Cadastrar`
+                    )}
+                </Button>
+            </Container>
+        </>
+    );
 }
 
 export default NewData;

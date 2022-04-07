@@ -38,12 +38,20 @@ async function logout(token) {
     await axios.delete(`${BASE_URL}/logout`, config);
 }
 
+async function authToken(token) {
+    const config = createConfig(token);
+
+    const promise = await axios.get(`${BASE_URL}/auth-token`, config);
+    return promise;
+}
+
 const api = {
     createUser,
     login,
     createRecord,
     getUserData,
     logout,
+    authToken,
 };
 
 export default api;
