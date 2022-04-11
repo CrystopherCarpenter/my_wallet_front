@@ -46,7 +46,7 @@ function Wallet() {
 
     async function authValidation() {
         try {
-            await api.authToken(auth.token);
+            await api.authToken(auth);
             loadData();
         } catch {
             Swal.fire({

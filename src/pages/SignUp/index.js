@@ -38,13 +38,18 @@ function SignUp() {
         }
 
         const user = { ...userData };
+
         delete user.passwordConf;
+
+        console.log(user);
 
         setLoading(true);
         try {
-            await api.createUser(userData);
+            const res = await api.createUser(user);
+            console.log(res);
             navigate(`/`);
-        } catch {
+        } catch (error) {
+            console.log(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Ops!',

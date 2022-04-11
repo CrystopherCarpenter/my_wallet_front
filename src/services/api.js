@@ -11,6 +11,7 @@ function createConfig(token) {
 }
 
 async function createUser(user) {
+    console.log(user);
     await axios.post(`${BASE_URL}/user`, user);
 }
 

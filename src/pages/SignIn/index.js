@@ -21,7 +21,7 @@ function SignIn() {
         password: '',
     });
     const navigate = useNavigate();
-    const { auth } = useAuth();
+    const { auth, saveToken } = useAuth();
 
     useEffect(() => {
         if (auth && auth !== '') {
@@ -32,13 +32,10 @@ function SignIn() {
 
     async function authValidation() {
         try {
-            await api.authToken(auth.token);
+            await api.authToken(auth);
             navigate('/wallet');
             setLoading(false);
         } catch {
-            Swal.fire({
-                text: 'Faça login para continuar',
-            });
             setLoading(false);
         }
     }
@@ -54,7 +51,7 @@ function SignIn() {
             const { data } = await api.login(userData);
             saveToken(data.token);
             navigate(`/wallet`);
-        } catch {
+        } catch (error) {
             setLoading(false);
             Swal.fire({
                 icon: 'error',
