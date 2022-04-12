@@ -58,10 +58,10 @@ function Wallet() {
 
     async function loadData() {
         try {
-            const res = await api.getUserData(auth);
-
-            setData(res.data);
-            balanceCalc(res.data.records);
+            const { data } = await api.getUserData(auth);
+            console.log(data);
+            setData(data);
+            balanceCalc(data.records);
         } catch {
             Swal.fire({
                 icon: 'error',
@@ -119,9 +119,9 @@ function Wallet() {
     function recordInfo(data) {
         const value = parseFloat(data.value).toFixed(2).replace('.', ',');
         return (
-            <li key={data._id}>
+            <li key={data.id}>
                 <Data>
-                    <Day>{data.day}</Day>
+                    <Day>{data.date}</Day>
                     <Description>
                         <Text>{data.description}</Text>
                         <Value type={data.type}>
