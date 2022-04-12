@@ -41,15 +41,11 @@ function SignUp() {
 
         delete user.passwordConf;
 
-        console.log(user);
-
         setLoading(true);
         try {
             const res = await api.createUser(user);
-            console.log(res);
             navigate(`/`);
         } catch (error) {
-            console.log(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Ops!',
