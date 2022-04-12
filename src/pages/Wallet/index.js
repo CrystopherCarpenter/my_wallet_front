@@ -59,7 +59,6 @@ function Wallet() {
     async function loadData() {
         try {
             const { data } = await api.getUserData(auth);
-            console.log(data);
             setData(data);
             balanceCalc(data.records);
         } catch {
